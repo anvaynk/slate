@@ -1,54 +1,3 @@
-**Table of Contents**
-
-- [General API Information](#general-api-information)
-- [HTTP Return Codes](#http-return-codes)
-- [Error Codes](#error-codes)
-- [General Information on Endpoints](#general-information-on-endpoints)
-- [Endpoint security type](#endpoint-security-type)
-- [SIGNED (TRADE and USER_DATA) Endpoint security](#signed-trade-and-user_data-endpoint-security)
-  - [Timing security](#timing-security)
-  - [SIGNED Endpoint Examples for POST /uapi/v1/order](#signed-endpoint-examples-for-post-apiv1order)
-    - [Example 1: As a request body](#example-1-as-a-request-body)
-    - [Example 2: As a query string](#example-2-as-a-query-string)
-    - [Example 3: Mixed query string and request body](#example-3-mixed-query-string-and-request-body)
-- [Public API Endpoints](#public-api-endpoints)
-  - [ENUM definitions](#enum-definitions)
-  - [General endpoints](#general-endpoints)
-    - [Test connectivity](#test-connectivity)
-    - [System status](#system-status)
-    - [Check server time](#check-server-time)
-    - [Exchange information](#exchange-information)
-  - [Market Data endpoints](#market-data-endpoints)
-    - [24hr tickers price change statistics](#24hr-tickers-price-change-statistics)
-    - [24hr ticker price change statistics](#24hr-ticker-price-change-statistics)
-    - [Order book](#order-book)
-    - [Recent trades list](#recent-trades-list)
-    - [Old trade lookup (MARKET_DATA)](#old-trade-lookup-market_data)
-  - [Account endpoints](#account-endpoints)
-    - [New order (TRADE)](#new-order-trade)
-    - [Test new order (TRADE)](#test-new-order-trade)
-    - [Query order (USER_DATA)](#query-order-user_data)
-    - [Current open orders (USER_DATA)](#current-open-orders-user_data)
-    - [All orders (USER_DATA)](#all-orders-user_data)
-    - [Cancel order (TRADE)](#cancel-order-trade)
-    - [Cancel All Open Orders on a Symbol (TRADE)](#cancel-all-open-orders-on-a-symbol-trade)
-    - [Account information (USER_DATA)](#account-information-user_data)
-    - [Fund details (USER_DATA)](#fund-details-user_data)
-    - [Withdraw funds](#withdraw-funds)
-    - [Withdraw history (USER_DATA)](#withdraw-history-user_data)
-    - [Deposit address (USER_DATA)](#deposit-address-user_data)
-    - [Deposit history (USER_DATA)](#deposit-history-user_data)
-- [Filters](#filters)
-  - [Symbol filters](#symbol-filters)
-    - [PRICE_FILTER](#price_filter)
-    - [PERCENT_PRICE](#percent_price)
-    - [LOT_SIZE](#lot_size)
-    - [MIN_NOTIONAL](#min_notional)
-    - [MARKET_LOT_SIZE](#market_lot_size)
-    - [MAX_NUM_ORDERS](#max_num_orders)
-    - [MAX_POSITION FILTER](#max_position-filter)
-  - [Exchange Filters](#exchange-filters)
-    - [EXCHANGE_MAX_NUM_ORDERS](#exchange_max_num_orders)
 
 # Public Rest API for WazirX
 
@@ -169,57 +118,73 @@ price | 0.1
 recvWindow | 5000
 timestamp | 1499827319559
 
-### Example 1: As a request body
-* **requestBody:** symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
-* **HMAC SHA256 signature:**
+## Example 1: As a request body 
+> Request Body:
 
-    ```
-    [linux]$ echo -n "symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
-    (stdin)= a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360
-    ```
+```shell
+symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
+```
 
+> HMAC SHA256 signature:
 
-* **curl command:**
+```shell
+[linux]$ echo -n "symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
+(stdin)= a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360
+```
 
-    ```
-    (HMAC SHA256)
-    [linux]$ curl -H "X-WX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.wazirx.com/uapi/v1/order' -d 'symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360'
-    ```
+> (HMAC SHA256)
 
-### Example 2: As a query string
-* **queryString:** symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
-* **HMAC SHA256 signature:**
+```shell
+[linux]$ curl -H "X-WX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.wazirx.com/uapi/v1/order' -d 'symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360'
+```
 
-    ```
-    [linux]$ echo -n "symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
-    (stdin)= a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360
-    ```
+## Example 2: As a query string
+> Query String:
 
+```shell
+symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
+```
 
-* **curl command:**
+> HMAC SHA256 signature:
 
-    ```
-    (HMAC SHA256)
-    [linux]$ curl -H "X-WX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.wazirx.com/uapi/v1/order?symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360'
-    ```
-
-### Example 3: Mixed query string and request body
-* **queryString:** symbol=ltcbtc&side=buy&type=limit
-* **requestBody:** quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
-* **HMAC SHA256 signature:**
-
-    ```
-    [linux]$ echo -n "symbol=ltcbtc&side=buy&type=limitquantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
-    (stdin)= e8dc96bc41383d42f5dca9af18fdec5017555ba53256b55408c4e7cbbea79225
-    ```
+```shell
+[linux]$ echo -n "symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
+(stdin)= a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360
+```
 
 
-* **curl command:**
+> Curl Command:
 
-    ```
-    (HMAC SHA256)
-    [linux]$ curl -H "X-WX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.wazirx.com/uapi/v1/order?symbol=ltcbtc&side=buy&type=limit' -d 'quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=e8dc96bc41383d42f5dca9af18fdec5017555ba53256b55408c4e7cbbea79225'
-    ```
+```shell
+[linux]$ curl -H "X-WX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.wazirx.com/uapi/v1/order?symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=a03b8ba3ae3bad7b78fcec42224967e8cc19faec1a9d05c1f46200b9c5cab360'
+```
+
+## Example 3: Mixed query string and request body
+> Query String:
+
+```shell
+symbol=ltcbtc&side=buy&type=limit
+```
+
+> Request Body:
+
+```shell
+quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
+```
+
+> HMAC SHA256 signature:
+
+```shell
+[linux]$ echo -n "symbol=ltcbtc&side=buy&type=limitquantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
+(stdin)= e8dc96bc41383d42f5dca9af18fdec5017555ba53256b55408c4e7cbbea79225
+```
+
+
+> CURL command (HMAC SHA256):
+
+```shell
+[linux]$ curl -H "X-WX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://api.wazirx.com/uapi/v1/order?symbol=ltcbtc&side=buy&type=limit' -d 'quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=e8dc96bc41383d42f5dca9af18fdec5017555ba53256b55408c4e7cbbea79225'
+```
 
 Note that the signature is different in example 3.
 There is no & between "type=limit" and "quantity=1".
@@ -267,7 +232,7 @@ GET /uapi/v1/systemStatus
 ```
 Fetch system status. Response:
 
-```json5
+```json-doc
 { 
     "status": 0,              // 0: normal，1：system maintenance
     "message": "normal"       // normal or system maintenance
