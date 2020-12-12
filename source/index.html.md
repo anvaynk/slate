@@ -212,25 +212,31 @@ There is no & between "type=limit" and "quantity=1".
 
 
 ## General endpoints
-### Test connectivity
+
 ```
 GET /uapi/v1/ping
 ```
+
+> Response:
+
+```json-doc
+{}
+```
+### Test connectivity
+
 Test connectivity to the Rest API.
 
 **Parameters:**
 NONE
 
-**Response:**
-```json5
-{}
-```
+<br/>
+<br/>
 
-### System status
 ```
 GET /uapi/v1/systemStatus
 ```
-Fetch system status. Response:
+
+> Response:
 
 ```json-doc
 { 
@@ -239,31 +245,48 @@ Fetch system status. Response:
 }
 ```
 
-### Check server time
-```
-GET /uapi/v1/time
-```
-Test connectivity to the Rest API and get the current server time.
+### System status
+
+Fetch system status. 
 
 **Parameters:**
 NONE
 
-**Response:**
-```json5
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+```
+GET /uapi/v1/time
+```
+
+> Response:
+
+```json-doc
 {
   "serverTime": 1499827319559
 }
 ```
 
+### Check server time
+Test connectivity to the Rest API and get the current server time.
+
+**Parameters:**
+NONE
+
+
+
 ## Market Data endpoints
-### 24hr tickers price change statistics
+
 ```
 GET /uapi/v1/tickers/24hr
 ```
-24 hour rolling window price change statistics. 
 
-**Response:**
-```json5
+> Response:
+
+```json-doc
 [
   {
     "symbol": "btcinr",
@@ -280,24 +303,34 @@ GET /uapi/v1/tickers/24hr
   }
 ]
 ```
+### 24hr tickers price change statistics
+
+24 hour rolling window price change statistics. 
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 
-### 24hr ticker price change statistics
 ```
 GET /uapi/v1/ticker/24hr
 ```
-24 hour rolling window price change statistics. 
 
-**Parameters:**
+> Response:
 
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-
-* If the symbol is not sent, tickers for all symbols will be returned in an array.
-
-**Response:**
-```json5
+```json-doc
 {
   "symbol": "btcinr",
   "baseAsset": "btc",
@@ -313,21 +346,32 @@ symbol | STRING | YES |
 }
 ```
 
-
-### Order book
-```
-GET /uapi/v1/depth
-```
+### 24hr ticker price change statistics
+24 hour rolling window price change statistics. 
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-limit | INT | NO | Default 20; max 1000. Valid limits:[1, 5, 10, 20, 50, 100, 500, 1000]
 
-**Response:**
-```json5
+* If the symbol is not sent, tickers for all symbols will be returned in an array.
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+```
+GET /uapi/v1/depth
+```
+
+> Response:
+
+```json-doc
 {
    "at": 1588831243,
    "asks":[
@@ -344,23 +388,33 @@ limit | INT | NO | Default 20; max 1000. Valid limits:[1, 5, 10, 20, 50, 100, 50
    ]
 }
 ```
-
-
-### Recent trades list
-```
-GET /uapi/v1/trades
-```
-Get recent trades (up to last 500).
+### Order book
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-limit | INT | NO | Default 500; max 1000.
+limit | INT | NO | Default 20; max 1000. Valid limits:[1, 5, 10, 20, 50, 100, 500, 1000]
 
-**Response:**
-```json5
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+```
+GET /uapi/v1/trades
+```
+
+> Response:
+
+```json-doc
 [
   {
     "id": 28457,
@@ -374,10 +428,43 @@ limit | INT | NO | Default 500; max 1000.
 ```
 
 
-### Old trade lookup (MARKET_DATA)
+
+### Recent trades list
+Get recent trades (up to last 500).
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | Default 500; max 1000.
+
+<br />
+<br />
+<br />
+<br />
+
 ```
 GET /uapi/v1/historicalTrades
 ```
+
+> Response:
+
+```json-doc
+[
+  {
+    "id": 28457,
+    "price": "4.00000100",
+    "qty": "12.00000000",
+    "quoteQty": "48.000012",
+    "time": 1499865549590,
+    "isBuyerMaker": true
+  }
+]
+```
+
+### Old trade lookup (MARKET_DATA)
+
 Get older trades.
 
 **Parameters:**
@@ -388,27 +475,33 @@ symbol | STRING | YES |
 limit | INT | NO | Default 500; max 1000.
 fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades.
 
-**Response:**
-```json5
-[
-  {
-    "id": 28457,
-    "price": "4.00000100",
-    "qty": "12.00000000",
-    "quoteQty": "48.000012",
-    "time": 1499865549590,
-    "isBuyerMaker": true
-  }
-]
-```
+
 
 
 ## Account endpoints
 
-### New order (TRADE)
 ```
 POST /uapi/v1/order  (HMAC SHA256)
 ```
+
+> Response:
+
+```json-doc
+{
+  "id": 28,
+  "symbol": "btcusdt",
+  "price": "9293.0",
+  "origQty": "10.0",
+  "executedQty": "8.2",
+  "status": "wait",
+  "type": "limit",
+  "side": "sell",
+  "createdTime": 1499827319559,
+  "updatedTime": 1499827319559
+}
+```
+### New order (TRADE)
+
 Send in a new order.
 
 **Parameters:**
@@ -431,56 +524,36 @@ Type | Additional mandatory parameters
 `limit` | `quantity`, `price`
 `stop_limit` | `quantity`,  `price`, `stopPrice`
 
-**Response RESULT:**
-```json5
-{
-  "id": 28,
-  "symbol": "btcusdt",
-  "price": "9293.0",
-  "origQty": "10.0",
-  "executedQty": "8.2",
-  "status": "wait",
-  "type": "limit",
-  "side": "sell",
-  "createdTime": 1499827319559,
-  "updatedTime": 1499827319559
-}
-```
 
-### Test new order (TRADE)
+
 ```
 POST /uapi/v1/order/test (HMAC SHA256)
 ```
+
+> Response:
+
+```json-doc
+{}
+```
+### Test new order (TRADE)
+
 Test new order creation and signature/recvWindow long.
 Validates a new order but does not send it into the matching engine.
 
 **Parameters:**
-
 Same as `POST /uapi/v1/order`
 
 
-**Response:**
-```json5
-{}
-```
+<br />
+<br />
 
-### Query order (USER_DATA)
 ```
 GET /uapi/v1/order (HMAC SHA256)
 ```
-Check an order's status.
 
-**Parameters:**
+> Response:
 
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-orderId | LONG | YES |
-recvWindow | LONG | NO | The value cannot be greater than ```60000```
-timestamp | LONG | YES |
-
-**Response:**
-```json5
+```json-doc
 {
   "id": 30,
   "symbol": "btcusdt",
@@ -495,28 +568,31 @@ timestamp | LONG | YES |
   "updatedTime": 1507725176595
 }
 ```
+### Query order (USER_DATA)
 
-### Current open orders (USER_DATA)
-```
-GET /uapi/v1/openOrders  (HMAC SHA256)
-```
-Get all open orders on a symbol.
+Check an order's status.
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-symbol | STRING | NO |
-orderId | LONG | NO |
+symbol | STRING | YES |
+orderId | LONG | YES |
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
-**Notes:**
-* If the symbol is not sent, orders for all symbols will be returned in an array.
-* If `orderId` is set, it will get orders >= that `orderId`. Otherwise most recent orders are returned.
 
-**Response:**
-```json5
+<br />
+<br />
+<br />
+
+```
+GET /uapi/v1/openOrders  (HMAC SHA256)
+```
+
+> Response:
+
+```json-doc
 [
   {
     "id": 28,
@@ -546,29 +622,42 @@ timestamp | LONG | YES |
 ]
 ```
 
-### All orders (USER_DATA)
-```
-GET /uapi/v1/allOrders (HMAC SHA256)
-```
-Get all account orders; "idle", "wait", "cancel" or "done".
+### Current open orders (USER_DATA)
+
+Get all open orders on a symbol.
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-symbol | STRING | YES |
+symbol | STRING | NO |
 orderId | LONG | NO |
-startTime | LONG | NO |
-endTime | LONG | NO |
-limit | INT | NO | Default 500; max 1000.
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
 **Notes:**
+* If the symbol is not sent, orders for all symbols will be returned in an array.
 * If `orderId` is set, it will get orders >= that `orderId`. Otherwise most recent orders are returned.
 
-**Response:**
-```json5
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+```
+GET /uapi/v1/allOrders (HMAC SHA256)
+```
+
+> Response:
+
+```json-doc
 [
   {
     "id": 28,
@@ -598,23 +687,40 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Cancel order (TRADE)
-```
-DELETE /uapi/v1/order  (HMAC SHA256)
-```
-Cancel an active order.
+### All orders (USER_DATA)
+
+Get all account orders; "idle", "wait", "cancel" or "done".
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | YES |
+orderId | LONG | NO |
+startTime | LONG | NO |
+endTime | LONG | NO |
+limit | INT | NO | Default 500; max 1000.
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
-**Response:**
-```json5
+**Notes:**
+* If `orderId` is set, it will get orders >= that `orderId`. Otherwise most recent orders are returned.
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+```
+DELETE /uapi/v1/order  (HMAC SHA256)
+```
+
+> Response:
+
+```json-doc
 {
   "id": 30,
   "symbol": "btcusdt",
@@ -630,20 +736,31 @@ timestamp | LONG | YES |
 }
 ```
 
-### Cancel All Open Orders on a Symbol (TRADE)
-```
-DELETE /uapi/v1/openOrders (HMAC SHA256)
-```
-Cancels all active orders on a symbol.
+### Cancel order (TRADE)
+
+Cancel an active order.
+
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | YES |
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
-**Response**
-```json5
+
+<br />
+<br />
+<br />
+
+```
+DELETE /uapi/v1/openOrders (HMAC SHA256)
+```
+
+> Response:
+
+```json-doc
 [
   {
       "id": 28,
@@ -673,10 +790,52 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Account information (USER_DATA)
+### Cancel All Open Orders on a Symbol (TRADE)
+
+Cancels all active orders on a symbol.
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+recvWindow | LONG | NO | The value cannot be greater than ```60000```
+timestamp | LONG | YES |
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 ```
 GET /uapi/v1/account (HMAC SHA256)
 ```
+
+> Response:
+
+```json-doc
+{
+  "accountType": "default",
+  "canTrade": true,
+  "canWithdraw": true,
+  "updateTime": 123456789
+}
+```
+### Account information (USER_DATA)
+
 Get current account information.
 
 **Parameters:**
@@ -686,31 +845,15 @@ Name | Type | Mandatory | Description
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
-**Response:**
-```json5
-{
-  "accountType": "default",
-  "canTrade": true,
-  "canWithdraw": true,
-  "updateTime": 123456789
-}
-```
+<br />
 
-### Fund details (USER_DATA)
 ```
 GET /uapi/v1/funds (HMAC SHA256)
 ```
-Get fund details for current account.
 
-**Parameters:**
+> Response:
 
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-recvWindow | LONG | NO | The value cannot be greater than ```60000```
-timestamp | LONG | YES |
-
-**Response:**
-```json5
+```json-doc
 [
   {
     "asset": "btc",
@@ -725,12 +868,42 @@ timestamp | LONG | YES |
   }
 ]
 ```
+### Fund details (USER_DATA)
+
+Get fund details for current account.
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+recvWindow | LONG | NO | The value cannot be greater than ```60000```
+timestamp | LONG | YES |
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 
-### Withdraw funds
 ```
 POST /uapi/v1/withdraw  (HMAC SHA256)
 ```
+
+> Response:
+
+```json-doc
+{
+    "message": "success",
+    "success": true,
+    "id": "2342"
+}
+```
+
+### Withdraw funds
+
 Submit a withdraw request.
 
 **Parameters:**
@@ -744,35 +917,16 @@ amount | DECIMAL | YES
 note | STRING | NO | Description of the address
 recvWindow | LONG | NO    
 timestamp | LONG | YES    
-**Response:**
-```json5
-{
-    "message": "success",
-    "success": true,
-    "id": "2342"
-}
-```
 
-### Withdraw history (USER_DATA)
+<br />
+
 ```
 GET /uapi/v1/withdrawHistory (HMAC SHA256)
 ```
-Fetch withdraw history.
 
-**Parameters:**
+> Response:
 
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset | STRING | NO    
-status | STRING | NO | submitting, verification_pending, canceled, submitted, rejected, accepted, processing, done, failed
-startTime | LONG | NO    
-endTime | LONG | NO    
-recvWindow | LONG | NO    
-timestamp | LONG | YES    
-
-
-**Response:**
-```json5
+```json-doc
 {
     "withdrawList": [
         {
@@ -801,10 +955,54 @@ timestamp | LONG | YES
 }
 ```
 
-### Deposit address (USER_DATA)
+### Withdraw history (USER_DATA)
+
+Fetch withdraw history.
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+asset | STRING | NO    
+status | STRING | NO | submitting, verification_pending, canceled, submitted, rejected, accepted, processing, done, failed
+startTime | LONG | NO    
+endTime | LONG | NO    
+recvWindow | LONG | NO    
+timestamp | LONG | YES    
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 ```
 GET  /uapi/v1/depositAddress (HMAC SHA256)
 ```
+
+> Response:
+
+```json-doc
+{
+    "asset": "btc",
+    "address": "0xhc24f045834hff34fh705394855g5h49835734fb"
+}
+```
+
+> OR
+
+```json-doc
+{
+    "asset": "xrp",
+    "address": "0x6915f16f8791d0a1cc2bf47c13a6b2a92000504b",
+    "addressTag": "1231212"
+}
+```
+### Deposit address (USER_DATA)
+
 Fetch deposit address.
 
 **Parameters:**
@@ -816,42 +1014,18 @@ status | Boolean | NO
 recvWindow | LONG | NO    
 timestamp | LONG | YES    
 
-**Response:**
-```json5
-{
-    "asset": "btc",
-    "address": "0xhc24f045834hff34fh705394855g5h49835734fb"
-}
-```
-OR
-```json5
-{
-    "asset": "xrp",
-    "address": "0x6915f16f8791d0a1cc2bf47c13a6b2a92000504b",
-    "addressTag": "1231212"
-}
-```
+<br />
+<br />
+<br />
+<br />
 
-### Deposit history (USER_DATA)
 ```
 GET /uapi/v1/depositHistory (HMAC SHA256)
 ```
-Fetch deposit history.
 
-**Parameters:**
+> Response:
 
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset | STRING | NO    
-status | STRING | NO | submitted, rejected or accepted
-startTime | LONG | NO    
-endTime | LONG | NO    
-recvWindow | LONG | NO    
-timestamp | LONG | YES    
-
-
-**Response:**
-```json5
+```json-doc
 {
     "depositList": [
         {
@@ -875,16 +1049,41 @@ timestamp | LONG | YES
     "success": true
 }
 ```
+### Deposit history (USER_DATA)
 
-----------------------
+Fetch deposit history.
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+asset | STRING | NO    
+status | STRING | NO | submitted, rejected or accepted
+startTime | LONG | NO    
+endTime | LONG | NO    
+recvWindow | LONG | NO    
+timestamp | LONG | YES    
 
 
 # Filters
+
 Filters define trading rules on a symbol or an exchange.
 Filters come in two forms: `symbol filters` and `exchange filters`.
 
 ## Symbol filters
 ### PRICE_FILTER
+
+> /exchangeInfo format:
+
+```json-doc
+{
+  "filterType": "PRICE_FILTER",
+  "minPrice": "0.00000100",
+  "maxPrice": "100000.00000000",
+  "tickSize": "0.00000100"
+}
+```
+
 The `PRICE_FILTER` defines the `price` rules for a symbol. There are 3 parts:
 
 * `minPrice` defines the minimum `price`/`stopPrice` allowed; disabled on `minPrice` == 0.
@@ -897,26 +1096,12 @@ Any of the above variables can be set to 0, which disables that rule in the `pri
 * `price` <= `maxPrice`
 * (`price`-`minPrice`) % `tickSize` == 0
 
-**/exchangeInfo format:**
-```json5
-{
-  "filterType": "PRICE_FILTER",
-  "minPrice": "0.00000100",
-  "maxPrice": "100000.00000000",
-  "tickSize": "0.00000100"
-}
-```
 
 ### PERCENT_PRICE
-The `PERCENT_PRICE` filter defines valid range for a price based on the average of the previous trades.
-`avgPriceMins` is the number of minutes the average price is calculated over. 0 means the last price is used.
 
-In order to pass the `percent price`, the following must be true for `price`:
-* `price` <= `weightedAveragePrice` * `multiplierUp`
-* `price` >= `weightedAveragePrice` * `multiplierDown`
+> /exchangeInfo format:
 
-**/exchangeInfo format:**
-```json5
+```json-doc
 {
   "filterType": "PERCENT_PRICE",
   "multiplierUp": "1.3000",
@@ -925,7 +1110,29 @@ In order to pass the `percent price`, the following must be true for `price`:
 }
 ```
 
+The `PERCENT_PRICE` filter defines valid range for a price based on the average of the previous trades.
+`avgPriceMins` is the number of minutes the average price is calculated over. 0 means the last price is used.
+
+In order to pass the `percent price`, the following must be true for `price`:
+* `price` <= `weightedAveragePrice` * `multiplierUp`
+* `price` >= `weightedAveragePrice` * `multiplierDown`
+
+<br />
+<br />
+
 ### LOT_SIZE
+
+> /exchangeInfo format:
+
+```json-doc
+{
+  "filterType": "LOT_SIZE",
+  "minQty": "0.00100000",
+  "maxQty": "100000.00000000",
+  "stepSize": "0.00100000"
+}
+```
+
 The `LOT_SIZE` filter defines the `quantity` (aka "lots" in auction terms) rules for a symbol. There are 3 parts:
 
 * `minQty` defines the minimum `quantity`/`icebergQty` allowed.
@@ -938,26 +1145,12 @@ In order to pass the `lot size`, the following must be true for `quantity`/`iceb
 * `quantity` <= `maxQty`
 * (`quantity`-`minQty`) % `stepSize` == 0
 
-**/exchangeInfo format:**
-```json5
-{
-  "filterType": "LOT_SIZE",
-  "minQty": "0.00100000",
-  "maxQty": "100000.00000000",
-  "stepSize": "0.00100000"
-}
-```
 
 ### MIN_NOTIONAL
-The `MIN_NOTIONAL` filter defines the minimum notional value allowed for an order on a symbol.
-An order's notional value is the `price` * `quantity`.
-`applyToMarket` determines whether or not the `MIN_NOTIONAL` filter will also be applied to `MARKET` orders.
-Since `MARKET` orders have no price, the average price is used over the last `avgPriceMins` minutes.
-`avgPriceMins` is the number of minutes the average price is calculated over. 0 means the last price is used.
 
+> /exchangeInfo format:
 
-**/exchangeInfo format:**
-```json5
+```json-doc
 {
   "filterType": "MIN_NOTIONAL",
   "minNotional": "0.00100000",
@@ -966,7 +1159,32 @@ Since `MARKET` orders have no price, the average price is used over the last `av
 }
 ```
 
+The `MIN_NOTIONAL` filter defines the minimum notional value allowed for an order on a symbol.
+An order's notional value is the `price` * `quantity`.
+`applyToMarket` determines whether or not the `MIN_NOTIONAL` filter will also be applied to `MARKET` orders.
+Since `MARKET` orders have no price, the average price is used over the last `avgPriceMins` minutes.
+`avgPriceMins` is the number of minutes the average price is calculated over. 0 means the last price is used.
+
+
+<br />
+<br />
+<br />
+<br />
+
 ### MARKET_LOT_SIZE
+
+> /exchangeInfo format:
+
+```json-doc
+{
+  "filterType": "MARKET_LOT_SIZE",
+  "minQty": "0.00100000",
+  "maxQty": "100000.00000000",
+  "stepSize": "0.00100000"
+}
+```
+
+
 The `MARKET_LOT_SIZE` filter defines the `quantity` (aka "lots" in auction terms) rules for `MARKET` orders on a symbol. There are 3 parts:
 
 * `minQty` defines the minimum `quantity` allowed.
@@ -979,29 +1197,36 @@ In order to pass the `market lot size`, the following must be true for `quantity
 * `quantity` <= `maxQty`
 * (`quantity`-`minQty`) % `stepSize` == 0
 
-**/exchangeInfo format:**
-```json5
-{
-  "filterType": "MARKET_LOT_SIZE",
-  "minQty": "0.00100000",
-  "maxQty": "100000.00000000",
-  "stepSize": "0.00100000"
-}
-```
 
 ### MAX_NUM_ORDERS
-The `MAX_NUM_ORDERS` filter defines the maximum number of orders an account is allowed to have open on a symbol.
-Note that both "algo" orders and normal orders are counted for this filter.
 
-**/exchangeInfo format:**
-```json5
+> /exchangeInfo format:
+
+```json-doc
 {
   "filterType": "MAX_NUM_ORDERS",
   "limit": 25
 }
 ```
 
+The `MAX_NUM_ORDERS` filter defines the maximum number of orders an account is allowed to have open on a symbol.
+Note that both "algo" orders and normal orders are counted for this filter.
+
+<br />
+<br />
+<br />
+<br />
+
 ### MAX_POSITION FILTER
+
+> /exchangeInfo format:
+
+```json-doc
+{
+  "filterType":"MAX_POSITION",
+  "maxPosition":"10.00000000"
+}
+```
 
 The `MAX_POSITION` filter defines the allowed maximum position an account can have on the base asset of a symbol. An account's position defined as the sum of the account's:
 1. free balance of the base asset
@@ -1010,23 +1235,19 @@ The `MAX_POSITION` filter defines the allowed maximum position an account can ha
 
 `BUY` orders will be rejected if the account's position is greater than the maximum position allowed.
 
-**/exchangeInfo format:**
-```json5
-{
-  "filterType":"MAX_POSITION",
-  "maxPosition":"10.00000000"
-}
-```
 
 
 ## Exchange Filters
-### EXCHANGE_MAX_NUM_ORDERS
-The `MAX_NUM_ORDERS` filter defines the maximum number of orders an account is allowed to have open on the exchange.
 
-**/exchangeInfo format:**
-```json5
+> /exchangeInfo format:
+
+```json-doc
 {
   "filterType": "EXCHANGE_MAX_NUM_ORDERS",
   "maxNumOrders": 1000
 }
 ```
+### EXCHANGE_MAX_NUM_ORDERS
+
+The `MAX_NUM_ORDERS` filter defines the maximum number of orders an account is allowed to have open on the exchange.
+
