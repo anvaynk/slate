@@ -590,6 +590,9 @@ html, body {
   }
 
   .content {
+    pre {
+      margin: 1em 0;
+    }
     blockquote {
       > p {
         color: $code-bg;

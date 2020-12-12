@@ -211,7 +211,9 @@ There is no & between "type=limit" and "quantity=1".
 * sell
 
 
-## General endpoints
+### General endpoints
+
+## Test connectivity
 
 ```
 GET /uapi/v1/ping
@@ -222,7 +224,6 @@ GET /uapi/v1/ping
 ```json-doc
 {}
 ```
-### Test connectivity
 
 Test connectivity to the Rest API.
 
@@ -231,6 +232,8 @@ NONE
 
 <br/>
 <br/>
+
+## System status
 
 ```
 GET /uapi/v1/systemStatus
@@ -245,8 +248,6 @@ GET /uapi/v1/systemStatus
 }
 ```
 
-### System status
-
 Fetch system status. 
 
 **Parameters:**
@@ -257,6 +258,8 @@ NONE
 <br/>
 <br/>
 <br/>
+
+## Check server time
 
 ```
 GET /uapi/v1/time
@@ -270,15 +273,15 @@ GET /uapi/v1/time
 }
 ```
 
-### Check server time
+
 Test connectivity to the Rest API and get the current server time.
 
 **Parameters:**
 NONE
 
 
-
-## Market Data endpoints
+# Market Data endpoints
+## 24hr tickers price change statistics
 
 ```
 GET /uapi/v1/tickers/24hr
@@ -303,26 +306,10 @@ GET /uapi/v1/tickers/24hr
   }
 ]
 ```
-### 24hr tickers price change statistics
-
 24 hour rolling window price change statistics. 
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
+## 24hr ticker price change statistics
 
 ```
 GET /uapi/v1/ticker/24hr
@@ -346,7 +333,6 @@ GET /uapi/v1/ticker/24hr
 }
 ```
 
-### 24hr ticker price change statistics
 24 hour rolling window price change statistics. 
 
 **Parameters:**
@@ -358,12 +344,8 @@ symbol | STRING | YES |
 * If the symbol is not sent, tickers for all symbols will be returned in an array.
 
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+## Order book
 
 ```
 GET /uapi/v1/depth
@@ -388,7 +370,6 @@ GET /uapi/v1/depth
    ]
 }
 ```
-### Order book
 
 **Parameters:**
 
@@ -398,15 +379,8 @@ symbol | STRING | YES |
 limit | INT | NO | Default 20; max 1000. Valid limits:[1, 5, 10, 20, 50, 100, 500, 1000]
 
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
+## Recent trades list
 
 ```
 GET /uapi/v1/trades
@@ -427,9 +401,6 @@ GET /uapi/v1/trades
 ]
 ```
 
-
-
-### Recent trades list
 Get recent trades (up to last 500).
 
 **Parameters:**
@@ -440,9 +411,8 @@ symbol | STRING | YES |
 limit | INT | NO | Default 500; max 1000.
 
 <br />
-<br />
-<br />
-<br />
+
+## Old trade lookup (MARKET_DATA)
 
 ```
 GET /uapi/v1/historicalTrades
@@ -463,8 +433,6 @@ GET /uapi/v1/historicalTrades
 ]
 ```
 
-### Old trade lookup (MARKET_DATA)
-
 Get older trades.
 
 **Parameters:**
@@ -476,9 +444,9 @@ limit | INT | NO | Default 500; max 1000.
 fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades.
 
 
+# Account endpoints
 
-
-## Account endpoints
+## New order (TRADE)
 
 ```
 POST /uapi/v1/order  (HMAC SHA256)
@@ -500,7 +468,6 @@ POST /uapi/v1/order  (HMAC SHA256)
   "updatedTime": 1499827319559
 }
 ```
-### New order (TRADE)
 
 Send in a new order.
 
@@ -525,6 +492,7 @@ Type | Additional mandatory parameters
 `stop_limit` | `quantity`,  `price`, `stopPrice`
 
 
+## Test new order (TRADE)
 
 ```
 POST /uapi/v1/order/test (HMAC SHA256)
@@ -535,7 +503,6 @@ POST /uapi/v1/order/test (HMAC SHA256)
 ```json-doc
 {}
 ```
-### Test new order (TRADE)
 
 Test new order creation and signature/recvWindow long.
 Validates a new order but does not send it into the matching engine.
@@ -544,8 +511,7 @@ Validates a new order but does not send it into the matching engine.
 Same as `POST /uapi/v1/order`
 
 
-<br />
-<br />
+## Query order (USER_DATA)
 
 ```
 GET /uapi/v1/order (HMAC SHA256)
@@ -568,7 +534,6 @@ GET /uapi/v1/order (HMAC SHA256)
   "updatedTime": 1507725176595
 }
 ```
-### Query order (USER_DATA)
 
 Check an order's status.
 
@@ -583,8 +548,8 @@ timestamp | LONG | YES |
 
 
 <br />
-<br />
-<br />
+
+## Current open orders (USER_DATA)
 
 ```
 GET /uapi/v1/openOrders  (HMAC SHA256)
@@ -622,8 +587,6 @@ GET /uapi/v1/openOrders  (HMAC SHA256)
 ]
 ```
 
-### Current open orders (USER_DATA)
-
 Get all open orders on a symbol.
 
 **Parameters:**
@@ -640,16 +603,8 @@ timestamp | LONG | YES |
 * If `orderId` is set, it will get orders >= that `orderId`. Otherwise most recent orders are returned.
 
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+## All orders (USER_DATA)
 
 ```
 GET /uapi/v1/allOrders (HMAC SHA256)
@@ -687,8 +642,6 @@ GET /uapi/v1/allOrders (HMAC SHA256)
 ]
 ```
 
-### All orders (USER_DATA)
-
 Get all account orders; "idle", "wait", "cancel" or "done".
 
 **Parameters:**
@@ -707,12 +660,8 @@ timestamp | LONG | YES |
 * If `orderId` is set, it will get orders >= that `orderId`. Otherwise most recent orders are returned.
 
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
+## Cancel order (TRADE)
 
 ```
 DELETE /uapi/v1/order  (HMAC SHA256)
@@ -736,8 +685,6 @@ DELETE /uapi/v1/order  (HMAC SHA256)
 }
 ```
 
-### Cancel order (TRADE)
-
 Cancel an active order.
 
 **Parameters:**
@@ -751,8 +698,8 @@ timestamp | LONG | YES |
 
 
 <br />
-<br />
-<br />
+
+## Cancel All Open Orders on a Symbol (TRADE)
 
 ```
 DELETE /uapi/v1/openOrders (HMAC SHA256)
@@ -790,8 +737,6 @@ DELETE /uapi/v1/openOrders (HMAC SHA256)
 ]
 ```
 
-### Cancel All Open Orders on a Symbol (TRADE)
-
 Cancels all active orders on a symbol.
 
 Name | Type | Mandatory | Description
@@ -802,23 +747,8 @@ timestamp | LONG | YES |
 
 
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+## Account information (USER_DATA)
 
 ```
 GET /uapi/v1/account (HMAC SHA256)
@@ -834,7 +764,6 @@ GET /uapi/v1/account (HMAC SHA256)
   "updateTime": 123456789
 }
 ```
-### Account information (USER_DATA)
 
 Get current account information.
 
@@ -846,6 +775,8 @@ recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
 <br />
+
+## Fund details (USER_DATA)
 
 ```
 GET /uapi/v1/funds (HMAC SHA256)
@@ -868,7 +799,6 @@ GET /uapi/v1/funds (HMAC SHA256)
   }
 ]
 ```
-### Fund details (USER_DATA)
 
 Get fund details for current account.
 
@@ -879,14 +809,10 @@ Name | Type | Mandatory | Description
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
 <br />
 
+## Withdraw funds
 
 ```
 POST /uapi/v1/withdraw  (HMAC SHA256)
@@ -901,8 +827,6 @@ POST /uapi/v1/withdraw  (HMAC SHA256)
     "id": "2342"
 }
 ```
-
-### Withdraw funds
 
 Submit a withdraw request.
 
@@ -919,6 +843,8 @@ recvWindow | LONG | NO
 timestamp | LONG | YES    
 
 <br />
+
+## Withdraw history (USER_DATA)
 
 ```
 GET /uapi/v1/withdrawHistory (HMAC SHA256)
@@ -955,8 +881,6 @@ GET /uapi/v1/withdrawHistory (HMAC SHA256)
 }
 ```
 
-### Withdraw history (USER_DATA)
-
 Fetch withdraw history.
 
 **Parameters:**
@@ -971,13 +895,8 @@ recvWindow | LONG | NO
 timestamp | LONG | YES    
 
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+## Deposit address (USER_DATA)
 
 ```
 GET  /uapi/v1/depositAddress (HMAC SHA256)
@@ -1001,7 +920,6 @@ GET  /uapi/v1/depositAddress (HMAC SHA256)
     "addressTag": "1231212"
 }
 ```
-### Deposit address (USER_DATA)
 
 Fetch deposit address.
 
@@ -1015,9 +933,8 @@ recvWindow | LONG | NO
 timestamp | LONG | YES    
 
 <br />
-<br />
-<br />
-<br />
+
+## Deposit history (USER_DATA)
 
 ```
 GET /uapi/v1/depositHistory (HMAC SHA256)
@@ -1049,7 +966,6 @@ GET /uapi/v1/depositHistory (HMAC SHA256)
     "success": true
 }
 ```
-### Deposit history (USER_DATA)
 
 Fetch deposit history.
 
