@@ -74,8 +74,8 @@ html, body {
   // This is the logo at the top of the ToC
   .logo {
     display: block;
-    max-width: 100%;
-    margin-bottom: $logo-margin;
+    max-width: $logo-max-width;
+    margin: $logo-margin;
   }
 
   &>.search {
@@ -153,8 +153,8 @@ html, body {
 
   // This is the currently selected ToC entry
   .toc-link.active {
-    background-color: $nav-active-bg;
     color: $nav-active-text;
+    box-shadow: $nav-active-highlight;
   }
 
   // this is parent links of the currently selected ToC entry
@@ -517,7 +517,6 @@ html, body {
   }
 
   pre, blockquote {
-    background-color: $code-bg;
     color: #fff;
 
     margin: 0;
@@ -541,15 +540,16 @@ html, body {
 
   pre {
     @extend %code-font;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    padding: 2em $main-padding;
+    background-color: $code-bg;
+    padding: 2em;
+    width: calc(50% - 4em);
+    box-shadow: inset 0 1px 2px #10223c;
+    margin: 1em 2em;
   }
 
   blockquote {
     &>p {
-      background-color: $code-annotation-bg;
-      padding: $code-annotation-padding 2em;
+      padding: 0 2em;
       color: #eee;
     }
   }
@@ -587,6 +587,14 @@ html, body {
 @media (max-width: $phone-width) {
   .dark-box {
     display: none;
+  }
+
+  .content {
+    blockquote {
+      > p {
+        color: $code-bg;
+      }
+    }
   }
 
   %left-col {

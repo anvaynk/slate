@@ -23,15 +23,16 @@ under the License.
 
 // BACKGROUND COLORS
 ////////////////////
-$nav-bg: #2E3336 !default;
-$examples-bg: #2E3336 !default;
-$code-bg: #1E2224 !default;
+$nav-bg: #3067f0 !default;
+$examples-bg: #3067f0 !default;
+$code-bg: #1a357d !default;
 $code-annotation-bg: #191D1F !default;
-$nav-subitem-bg: #1E2224 !default;
+$nav-subitem-bg: #2e4eef !default;
 $nav-active-bg: #0F75D4 !default;
-$nav-active-parent-bg: #1E2224 !default; // parent links of the current section
+$nav-active-highlight: rgb(249, 222, 56) 3px 0px 0px 0px inset !default;
+$nav-active-parent-bg: transparent !default; // parent links of the current section
 $lang-select-border: #000 !default;
-$lang-select-bg: #1E2224 !default;
+$lang-select-bg: #1a357d !default;
 $lang-select-active-bg: $examples-bg !default; // feel free to change this to blue or something
 $lang-select-pressed-bg: #111 !default; // color of language tab bg when mouse is pressed
 $main-bg: #F3F7F9 !default;
@@ -56,7 +57,7 @@ $lang-select-pressed-text: #fff !default; // color of language tab text when mou
 ////////////////////
 $nav-width: 230px !default; // width of the navbar
 $examples-width: 50% !default; // portion of the screen taken up by code examples
-$logo-margin: 0px !default; // margin below logo
+$logo-margin: 20px !default; // margin around logo
 $main-padding: 28px !default; // padding to left and right of content & examples
 $nav-padding: 15px !default; // padding to left and right of navbar
 $nav-v-padding: 10px !default; // padding used vertically around search boxes and results
@@ -65,7 +66,7 @@ $code-annotation-padding: 13px !default; // padding inside code annotations
 $h1-margin-bottom: 21px !default; // padding under the largest header tags
 $tablet-width: 930px !default; // min width before reverting to tablet size
 $phone-width: $tablet-width - $nav-width !default; // min width before reverting to mobile size
-
+$logo-max-width: calc(100% - 40px) !default;
 
 // FONTS
 ////////////////////
