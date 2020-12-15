@@ -20,16 +20,17 @@
 
 
 ## Error Codes
-* Any endpoint can return an ERROR
 
-Sample Payload below:
-```json5
+> Sample Payload below:
+
+```json-doc
 {
   "code": -1121,
   "message": "Invalid symbol."
 }
 ```
-* Specific error codes and messages are defined in [Errors Codes](./errors.md).
+
+* Any endpoint can return an ERROR
 
 ## General Information on Endpoints
 * For `GET` endpoints, parameters must be sent as a `query string`.
@@ -64,7 +65,7 @@ MARKET_DATA | Endpoint requires sending a valid API-Key.
 
 * `TRADE` and `USER_DATA` endpoints are `SIGNED` endpoints.
 
-# SIGNED (TRADE and USER_DATA) Endpoint security
+## SIGNED (TRADE and USER_DATA) Endpoint security
 * `SIGNED` endpoints require an additional parameter, `signature`, to be
   sent in the  `query string` or `request body`.
 * Endpoints use `HMAC SHA256` signatures. The `HMAC SHA256 signature` is a keyed `HMAC SHA256` operation.
@@ -79,14 +80,16 @@ MARKET_DATA | Endpoint requires sending a valid API-Key.
 * An additional parameter, `recvWindow`, may be sent to specify the number of
   milliseconds after `timestamp` the request is valid for. If `recvWindow`
   is not sent, **it defaults to 5000**.
-* The logic is as follows:
-  ```javascript
+
+> The logic is as follows:
+
+```json-doc
   if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
     // process request
   } else {
     // reject request
   }
-  ```
+```
 
 **Serious trading is about timing.** Networks can be unstable and unreliable,
 which can lead to requests taking varying amounts of time to reach the
@@ -211,7 +214,7 @@ There is no & between "type=limit" and "quantity=1".
 * sell
 
 
-### General endpoints
+# General endpoints
 
 ## Test connectivity
 
@@ -401,7 +404,7 @@ GET /uapi/v1/trades
 ]
 ```
 
-Get recent trades (up to last 500).
+Get recent trades.
 
 **Parameters:**
 
@@ -808,362 +811,4 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 recvWindow | LONG | NO | The value cannot be greater than ```60000```
 timestamp | LONG | YES |
-
-
-<br />
-
-## Withdraw funds
-
-```
-POST /uapi/v1/withdraw  (HMAC SHA256)
-```
-
-> Response:
-
-```json-doc
-{
-    "message": "success",
-    "success": true,
-    "id": "2342"
-}
-```
-
-Submit a withdraw request.
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset    |  STRING |    YES
-address     | STRING | YES    
-addressTag | STRING | NO | Secondary address identifier for coins like XRP,XMR etc.
-amount | DECIMAL | YES    
-note | STRING | NO | Description of the address
-recvWindow | LONG | NO    
-timestamp | LONG | YES    
-
-<br />
-
-## Withdraw history (USER_DATA)
-
-```
-GET /uapi/v1/withdrawHistory (HMAC SHA256)
-```
-
-> Response:
-
-```json-doc
-{
-    "withdrawList": [
-        {
-            "id": "8345",
-            "amount": "0.99",
-            "transactionFee": "0.01",
-            "address": "0x6915f16f8791d0a1cc2bf47c13a6b2a92000504b",
-            "asset": "btc",
-            "txId": null,
-            "applyTime": 1508198532000,
-            "status": "submitted"
-        },
-        {
-            "id": "2342",
-            "amount": "999.9999",
-            "transactionFee": "0.0001",
-            "address": "463tWEBn5XZJSxLU34r6g7h8jtxuNcDbjLSjkn3XAXHCbLrTTErJrBWYgHJQyrCwkNgYvyV3z8zctJLPCZy24jvb3NiTcTJ",
-            "addressTag": "342341222",
-            "txId": "b3c6219639c8ae3f9cf010cdc24fw7f7yt8j1e063f9b4bd1a05cb44c4b6e2509",
-            "asset": "xrp",
-            "applyTime": 1509832749300,
-            "status": "done"
-        }
-    ],
-    "success": true
-}
-```
-
-Fetch withdraw history.
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset | STRING | NO    
-status | STRING | NO | submitting, verification_pending, canceled, submitted, rejected, accepted, processing, done, failed
-startTime | LONG | NO    
-endTime | LONG | NO    
-recvWindow | LONG | NO    
-timestamp | LONG | YES    
-
-<br />
-
-## Deposit address (USER_DATA)
-
-```
-GET  /uapi/v1/depositAddress (HMAC SHA256)
-```
-
-> Response:
-
-```json-doc
-{
-    "asset": "btc",
-    "address": "0xhc24f045834hff34fh705394855g5h49835734fb"
-}
-```
-
-> OR
-
-```json-doc
-{
-    "asset": "xrp",
-    "address": "0x6915f16f8791d0a1cc2bf47c13a6b2a92000504b",
-    "addressTag": "1231212"
-}
-```
-
-Fetch deposit address.
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset | STRING | YES    
-status | Boolean | NO
-recvWindow | LONG | NO    
-timestamp | LONG | YES    
-
-<br />
-
-## Deposit history (USER_DATA)
-
-```
-GET /uapi/v1/depositHistory (HMAC SHA256)
-```
-
-> Response:
-
-```json-doc
-{
-    "depositList": [
-        {
-            "insertTime": 1508198532000,
-            "amount": "0.04670582",
-            "asset": "btc",
-            "address": "0x6915f16f8791d0a1cc2bf47c13a6b2a92000504b",
-            "txId": "0xdf33b22bdb2b28b1f75ccd201a4a4m6e7g83jy5fc5d5a9d1340961598cfcb0a1",
-            "status": "submitted"
-        },
-        {
-            "insertTime": 1508298532000,
-            "amount": "1000",
-            "asset": "xrp",
-            "address": "463tWEBn5XZJSxLU34r6g7h8jtxuNcDbjLSjkn3XAXHCbLrTTErJrBWYgHJQyrCwkNgYvyV3z8zctJLPCZy24jvb3NiTcTJ",
-            "addressTag": "342341222",
-            "txId": "b3c6219639c8ae3f9cf010cdc24fw7f7yt8j1e063f9b4bd1a05cb44c4b6e2509",
-            "status": "accepted"
-        }
-    ],
-    "success": true
-}
-```
-
-Fetch deposit history.
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset | STRING | NO    
-status | STRING | NO | submitted, rejected or accepted
-startTime | LONG | NO    
-endTime | LONG | NO    
-recvWindow | LONG | NO    
-timestamp | LONG | YES    
-
-
-# Filters
-
-Filters define trading rules on a symbol or an exchange.
-Filters come in two forms: `symbol filters` and `exchange filters`.
-
-## Symbol filters
-### PRICE_FILTER
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "PRICE_FILTER",
-  "minPrice": "0.00000100",
-  "maxPrice": "100000.00000000",
-  "tickSize": "0.00000100"
-}
-```
-
-The `PRICE_FILTER` defines the `price` rules for a symbol. There are 3 parts:
-
-* `minPrice` defines the minimum `price`/`stopPrice` allowed; disabled on `minPrice` == 0.
-* `maxPrice` defines the maximum `price`/`stopPrice` allowed; disabled on `maxPrice` == 0.
-* `tickSize` defines the intervals that a `price`/`stopPrice` can be increased/decreased by; disabled on `tickSize` == 0.
-
-Any of the above variables can be set to 0, which disables that rule in the `price filter`. In order to pass the `price filter`, the following must be true for `price`/`stopPrice` of the enabled rules:
-
-* `price` >= `minPrice`
-* `price` <= `maxPrice`
-* (`price`-`minPrice`) % `tickSize` == 0
-
-
-### PERCENT_PRICE
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "PERCENT_PRICE",
-  "multiplierUp": "1.3000",
-  "multiplierDown": "0.7000",
-  "avgPriceMins": 5
-}
-```
-
-The `PERCENT_PRICE` filter defines valid range for a price based on the average of the previous trades.
-`avgPriceMins` is the number of minutes the average price is calculated over. 0 means the last price is used.
-
-In order to pass the `percent price`, the following must be true for `price`:
-* `price` <= `weightedAveragePrice` * `multiplierUp`
-* `price` >= `weightedAveragePrice` * `multiplierDown`
-
-<br />
-<br />
-
-### LOT_SIZE
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "LOT_SIZE",
-  "minQty": "0.00100000",
-  "maxQty": "100000.00000000",
-  "stepSize": "0.00100000"
-}
-```
-
-The `LOT_SIZE` filter defines the `quantity` (aka "lots" in auction terms) rules for a symbol. There are 3 parts:
-
-* `minQty` defines the minimum `quantity`/`icebergQty` allowed.
-* `maxQty` defines the maximum `quantity`/`icebergQty` allowed.
-* `stepSize` defines the intervals that a `quantity`/`icebergQty` can be increased/decreased by.
-
-In order to pass the `lot size`, the following must be true for `quantity`/`icebergQty`:
-
-* `quantity` >= `minQty`
-* `quantity` <= `maxQty`
-* (`quantity`-`minQty`) % `stepSize` == 0
-
-
-### MIN_NOTIONAL
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "MIN_NOTIONAL",
-  "minNotional": "0.00100000",
-  "applyToMarket": true,
-  "avgPriceMins": 5
-}
-```
-
-The `MIN_NOTIONAL` filter defines the minimum notional value allowed for an order on a symbol.
-An order's notional value is the `price` * `quantity`.
-`applyToMarket` determines whether or not the `MIN_NOTIONAL` filter will also be applied to `MARKET` orders.
-Since `MARKET` orders have no price, the average price is used over the last `avgPriceMins` minutes.
-`avgPriceMins` is the number of minutes the average price is calculated over. 0 means the last price is used.
-
-
-<br />
-<br />
-<br />
-<br />
-
-### MARKET_LOT_SIZE
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "MARKET_LOT_SIZE",
-  "minQty": "0.00100000",
-  "maxQty": "100000.00000000",
-  "stepSize": "0.00100000"
-}
-```
-
-
-The `MARKET_LOT_SIZE` filter defines the `quantity` (aka "lots" in auction terms) rules for `MARKET` orders on a symbol. There are 3 parts:
-
-* `minQty` defines the minimum `quantity` allowed.
-* `maxQty` defines the maximum `quantity` allowed.
-* `stepSize` defines the intervals that a `quantity` can be increased/decreased by.
-
-In order to pass the `market lot size`, the following must be true for `quantity`:
-
-* `quantity` >= `minQty`
-* `quantity` <= `maxQty`
-* (`quantity`-`minQty`) % `stepSize` == 0
-
-
-### MAX_NUM_ORDERS
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "MAX_NUM_ORDERS",
-  "limit": 25
-}
-```
-
-The `MAX_NUM_ORDERS` filter defines the maximum number of orders an account is allowed to have open on a symbol.
-Note that both "algo" orders and normal orders are counted for this filter.
-
-<br />
-<br />
-<br />
-<br />
-
-### MAX_POSITION FILTER
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType":"MAX_POSITION",
-  "maxPosition":"10.00000000"
-}
-```
-
-The `MAX_POSITION` filter defines the allowed maximum position an account can have on the base asset of a symbol. An account's position defined as the sum of the account's:
-1. free balance of the base asset
-1. locked balance of the base asset
-1. sum of the qty of all open BUY orders
-
-`BUY` orders will be rejected if the account's position is greater than the maximum position allowed.
-
-
-
-## Exchange Filters
-
-> /exchangeInfo format:
-
-```json-doc
-{
-  "filterType": "EXCHANGE_MAX_NUM_ORDERS",
-  "maxNumOrders": 1000
-}
-```
-### EXCHANGE_MAX_NUM_ORDERS
-
-The `MAX_NUM_ORDERS` filter defines the maximum number of orders an account is allowed to have open on the exchange.
 
