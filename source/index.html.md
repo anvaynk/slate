@@ -1,5 +1,5 @@
 
-# Public Rest API for WazirX
+# Public Rest API for WazirX - Trial
 
 ## General API Information
 * The base endpoint is: **https://api.wazirx.com**
